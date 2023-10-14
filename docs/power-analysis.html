@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Power Analysis | dss-powersim</title>
+  <meta name="description" content="This is a tutorial for power simulation" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Power Analysis | dss-powersim" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a tutorial for power simulation" />
+  <meta name="github-repo" content="Lips7/dss-powersim" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Power Analysis | dss-powersim" />
+  
+  <meta name="twitter:description" content="This is a tutorial for power simulation" />
+  
+
+<meta name="author" content="" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="simulation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Power Simulation</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Simulation-Based Power Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#table-of-contents"><i class="fa fa-check"></i>Table of Contents</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i>Contributors</a></li>
+</ul></li>
+<li class="part"><span><b>I Concepts</b></span></li>
+<li class="chapter" data-level="1" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>1</b> Power Analysis</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="power-analysis.html"><a href="power-analysis.html#canned-routines"><i class="fa fa-check"></i><b>1.1</b> Canned routines</a></li>
+<li class="chapter" data-level="1.2" data-path="power-analysis.html"><a href="power-analysis.html#step-by-step"><i class="fa fa-check"></i><b>1.2</b> Step by step</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>2</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="simulation.html"><a href="simulation.html#customization"><i class="fa fa-check"></i><b>2.1</b> Customization</a></li>
+<li class="chapter" data-level="2.2" data-path="simulation.html"><a href="simulation.html#step-by-step-1"><i class="fa fa-check"></i><b>2.2</b> Step by step</a></li>
+</ul></li>
+<li class="part"><span><b>II Preparation</b></span></li>
+<li class="chapter" data-level="3" data-path="power-of-what.html"><a href="power-of-what.html"><i class="fa fa-check"></i><b>3</b> Power of What?</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="power-of-what.html"><a href="power-of-what.html#study-design"><i class="fa fa-check"></i><b>3.1</b> Study design</a></li>
+<li class="chapter" data-level="3.2" data-path="power-of-what.html"><a href="power-of-what.html#mixed-effects-model"><i class="fa fa-check"></i><b>3.2</b> Mixed effects model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="power-of-what.html"><a href="power-of-what.html#step-1-model-specification"><i class="fa fa-check"></i><b>3.2.1</b> Step 1: model specification</a></li>
+<li class="chapter" data-level="3.2.2" data-path="power-of-what.html"><a href="power-of-what.html#step-2-variable-composition"><i class="fa fa-check"></i><b>3.2.2</b> Step 2: Variable composition</a></li>
+<li class="chapter" data-level="3.2.3" data-path="power-of-what.html"><a href="power-of-what.html#step-3-parameter-composition"><i class="fa fa-check"></i><b>3.2.3</b> Step 3: Parameter composition</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Implementation</b></span></li>
+<li class="chapter" data-level="4" data-path="r.html"><a href="r.html"><i class="fa fa-check"></i><b>4</b> R</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r.html"><a href="r.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a></li>
+<li class="chapter" data-level="4.2" data-path="r.html"><a href="r.html#data-simulation-step-by-step"><i class="fa fa-check"></i><b>4.2</b> Data simulation step by step</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="r.html"><a href="r.html#establish-the-simulation-parameters"><i class="fa fa-check"></i><b>4.2.1</b> Establish the simulation parameters</a></li>
+<li class="chapter" data-level="4.2.2" data-path="r.html"><a href="r.html#establish-the-data-generating-parameters"><i class="fa fa-check"></i><b>4.2.2</b> Establish the data-generating parameters</a></li>
+<li class="chapter" data-level="4.2.3" data-path="r.html"><a href="r.html#simulate-the-sampling-process"><i class="fa fa-check"></i><b>4.2.3</b> Simulate the sampling process</a></li>
+<li class="chapter" data-level="4.2.4" data-path="r.html"><a href="r.html#analyze-the-simulated-data"><i class="fa fa-check"></i><b>4.2.4</b> Analyze the simulated data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="r.html"><a href="r.html#data-simulation-automated"><i class="fa fa-check"></i><b>4.3</b> Data simulation automated</a></li>
+<li class="chapter" data-level="4.4" data-path="r.html"><a href="r.html#power-calculation-single-run"><i class="fa fa-check"></i><b>4.4</b> Power calculation single run</a></li>
+<li class="chapter" data-level="4.5" data-path="r.html"><a href="r.html#power-calculation-automated"><i class="fa fa-check"></i><b>4.5</b> Power calculation automated</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="r.html"><a href="r.html#check-false-positive-rate"><i class="fa fa-check"></i><b>4.5.1</b> Check false positive rate</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="r.html"><a href="r.html#power-for-different-effect-sizes"><i class="fa fa-check"></i><b>4.6</b> Power for different effect sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="python.html"><a href="python.html"><i class="fa fa-check"></i><b>5</b> Python</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="python.html"><a href="python.html#setup-1"><i class="fa fa-check"></i><b>5.1</b> Setup</a></li>
+<li class="chapter" data-level="5.2" data-path="python.html"><a href="python.html#data-simulation-step-by-step-1"><i class="fa fa-check"></i><b>5.2</b> Data simulation step by step</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="python.html"><a href="python.html#establish-the-simulation-parameters-1"><i class="fa fa-check"></i><b>5.2.1</b> Establish the simulation parameters</a></li>
+<li class="chapter" data-level="5.2.2" data-path="python.html"><a href="python.html#establish-the-data-generating-parameters-1"><i class="fa fa-check"></i><b>5.2.2</b> Establish the data-generating parameters</a></li>
+<li class="chapter" data-level="5.2.3" data-path="python.html"><a href="python.html#simulate-the-sampling-process-1"><i class="fa fa-check"></i><b>5.2.3</b> Simulate the sampling process</a></li>
+<li class="chapter" data-level="5.2.4" data-path="python.html"><a href="python.html#analyze-the-simulated-data-1"><i class="fa fa-check"></i><b>5.2.4</b> Analyze the simulated data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="python.html"><a href="python.html#data-simulation-automated-1"><i class="fa fa-check"></i><b>5.3</b> Data simulation automated</a></li>
+<li class="chapter" data-level="5.4" data-path="python.html"><a href="python.html#power-calculation-single-run-1"><i class="fa fa-check"></i><b>5.4</b> Power calculation single run</a></li>
+<li class="chapter" data-level="5.5" data-path="python.html"><a href="python.html#power-calculation-automated-1"><i class="fa fa-check"></i><b>5.5</b> Power calculation automated</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="python.html"><a href="python.html#check-false-positive-rate-1"><i class="fa fa-check"></i><b>5.5.1</b> Check false positive rate</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="python.html"><a href="python.html#power-for-different-effect-sizes-1"><i class="fa fa-check"></i><b>5.6</b> Power for different effect sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="stata.html"><a href="stata.html"><i class="fa fa-check"></i><b>6</b> Stata</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="stata.html"><a href="stata.html#setup-2"><i class="fa fa-check"></i><b>6.1</b> Setup</a></li>
+<li class="chapter" data-level="6.2" data-path="stata.html"><a href="stata.html#data-simulation-step-by-step-2"><i class="fa fa-check"></i><b>6.2</b> Data simulation step by step</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="stata.html"><a href="stata.html#establish-the-data-generating-parameters-2"><i class="fa fa-check"></i><b>6.2.1</b> Establish the data-generating parameters</a></li>
+<li class="chapter" data-level="6.2.2" data-path="stata.html"><a href="stata.html#simulate-the-sampling-process-2"><i class="fa fa-check"></i><b>6.2.2</b> Simulate the sampling process</a></li>
+<li class="chapter" data-level="6.2.3" data-path="stata.html"><a href="stata.html#analyze-the-simulated-data-2"><i class="fa fa-check"></i><b>6.2.3</b> Analyze the simulated data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="stata.html"><a href="stata.html#data-simulation-automated-2"><i class="fa fa-check"></i><b>6.3</b> Data simulation automated</a></li>
+<li class="chapter" data-level="6.4" data-path="stata.html"><a href="stata.html#power-calculation-single-run-2"><i class="fa fa-check"></i><b>6.4</b> Power calculation single run</a></li>
+<li class="chapter" data-level="6.5" data-path="stata.html"><a href="stata.html#power-calculation-automated-2"><i class="fa fa-check"></i><b>6.5</b> Power calculation automated</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="stata.html"><a href="stata.html#check-false-positive-rate-2"><i class="fa fa-check"></i><b>6.5.1</b> Check false positive rate</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="stata.html"><a href="stata.html#power-for-different-effect-sizes-2"><i class="fa fa-check"></i><b>6.6</b> Power for different effect sizes</a></li>
+</ul></li>
+<li class="part"><span><b>IV Appendix</b></span></li>
+<li class="chapter" data-level="7" data-path="software-comparison.html"><a href="software-comparison.html"><i class="fa fa-check"></i><b>7</b> Software Comparison</a></li>
+<li class="chapter" data-level="" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i>Resources</a>
+<ul>
+<li class="chapter" data-level="" data-path="resources.html"><a href="resources.html#r-1"><i class="fa fa-check"></i>R</a></li>
+<li class="chapter" data-level="" data-path="resources.html"><a href="resources.html#stata-1"><i class="fa fa-check"></i>Stata</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="power-analysis" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Power Analysis<a href="power-analysis.html#power-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="alert alert-success">
+<p>Statistical power is the probability of rejecting a null hypothesis when it is false, or equivalently, of detecting an effect if such an effect exists.</p>
+</div>
+<div id="canned-routines" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Canned routines<a href="power-analysis.html#canned-routines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For some studies, it can be an important step to calculate <em>a priori</em> statistical power. We use statistical power to determine the probability of rejecting a null hypothesis when it is false, or equivalently, of detecting an effect if such an effect exists.</p>
+<p><span class="math display">\[
+\begin{align}
+\textrm{Power} &amp;= \textrm{Pr}(\textrm{reject} \, H_0 \, | \, H_0 \, \textrm{is false}) \\
+               &amp;= 1 - \textrm{Pr}(\textrm{fail to reject} \, H_0 \, | \, H_0 \, \textrm{is false}) \\
+               &amp;= 1 - \beta
+\end{align}
+\]</span></p>
+<p>We want <span class="math inline">\(\beta\)</span> (Type II error) to be small and power to be large. When designing a study, rather than calculating power when sample size and effect size are fixed, researchers typically want to know the sample size required to reject a null hypothesis at a given level of power and effect size.</p>
+<p>In some situations, where the study design and/or model of interest is fairly simple, we can use a formula to calculate the sample size required to reject a null hypothesis. We will use a simple example to show the process involved. For instance, if we plan to perform a test of an hypothesis comparing the cholesterol levels of people in two populations, one with a diet comprising low oat consumption and the other with high oat consumption, we could specify the following null and alternative hypotheses, respectively:</p>
+<p><span class="math display">\[
+\begin{align}
+\textrm{H}_0 : \mu_1 - \mu_2 &amp;= 0 \\
+\textrm{H}_1 : \mu_1 - \mu_2 &amp;\neq 0
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span> are the mean cholesterol levels in the two populations being compared. We can use a formula to determine the sample sizes required so that the test has a specific power. We will need the following inputs to the formula:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\alpha\)</span> (Type I error / significance level): typically, this is set to <span class="math inline">\(0.05\)</span> in most studies.</li>
+<li><span class="math inline">\(1 - \beta\)</span> (power): often this is set to <span class="math inline">\(0.8\)</span> or <span class="math inline">\(0.9\)</span>.</li>
+<li><span class="math inline">\(\sigma\)</span> (population standard deviation): we need to estimate/guess this.</li>
+<li><span class="math inline">\(\delta\)</span> (alternative hypothesis): ideally the smallest difference <span class="math inline">\(\delta = \mu_1 - \mu_2\)</span> that has scientific or clinical importance.</li>
+</ol>
+<p>Given <span class="math inline">\(\alpha\)</span>, <span class="math inline">\((1 - \beta)\)</span>, <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(\delta\)</span>, we can calculate <span class="math inline">\(n_g\)</span> the sample size in each group to reject <span class="math inline">\(\textrm{H}_0\)</span> with probability <span class="math inline">\((1 - \beta)\)</span>. To simplify things a little, we will use the normal distribution as an approximation to the <span class="math inline">\(t\)</span> distribution (which should be fine when <span class="math inline">\(n_g \geq 30\)</span>). Here is the formula for this approximate two-sample <span class="math inline">\(t\)</span>-test:</p>
+<p><span class="math display">\[
+n_g \approx 2(z_{\alpha / 2} + z_\beta)^2 \left( \frac{\sigma}{\delta} \right)^2
+\]</span></p>
+<p>where <span class="math inline">\(n_g\)</span> is the sample size required in each group, <span class="math inline">\(z_{\alpha/2}\)</span> is the value from the standard normal distribution holding half the selected <span class="math inline">\(\alpha\)</span> level below it (because this is a two-tailed test), <span class="math inline">\(z_\beta\)</span> is the value from the standard normal distribution holding the <span class="math inline">\(\beta\)</span> level below it, <span class="math inline">\(\delta\)</span> is the effect size (the difference in population averages <span class="math inline">\(\mu_1 - \mu_2\)</span> of cholesterol), and <span class="math inline">\(\sigma\)</span> is the pooled population standard deviation (during study planning we usually assume equal variances in the two groups). Typically, we would set <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> to the following values and rely on previous studies or pilot data to obtain reasonable values for <span class="math inline">\(\sigma\)</span> and <span class="math inline">\(\delta\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\alpha = 0.05\)</span>, so <span class="math inline">\(z_{\alpha / 2} = 1.960\)</span>.</li>
+<li><span class="math inline">\(1 - \beta = 0.8\)</span>, so <span class="math inline">\(\beta = 0.2\)</span>, so <span class="math inline">\(z_\beta = 0.8416\)</span>.</li>
+<li><span class="math inline">\(\sigma = 1\)</span>; this could be our best guess based on previous studies.</li>
+<li><span class="math inline">\(\delta = 0.7\)</span>, our best guess based on previous studies could be that mean differences of 0.7 mmol/L or greater should be considered biologically important.</li>
+</ol>
+<p>We can then plug these input values into our formula:</p>
+<p><span class="math display">\[
+n_g \approx 2(1.960 + 0.8416)^2 \left( \frac{1}{0.7} \right)^2 = 32.036
+\]</span></p>
+<p>We always round up to a whole number for sample size, so for this study we need 33 subjects per group, or <span class="math inline">\(n=66\)</span> in total.</p>
+<p>In practice, we will often rely on software to perform the above calculation for us. In R we can use the <code>power.t.test()</code> function from the built-in <code>{stats}</code> package to calculate the sample size needed to reject the null hypothesis that <span class="math inline">\(\textrm{H}_0 : \mu_1 - \mu_2 = 0\)</span>. We just need to pass the <span class="math inline">\(n\)</span> parameter as <code>NULL</code> to tell R that we’d like to calculate sample size based on the values of the other parameters:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="power-analysis.html#cb1-1" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="cn">NULL</span>, <span class="at">delta=</span><span class="fl">0.7</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>, <span class="at">power=</span><span class="fl">0.8</span>, <span class="at">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##      Two-sample t test power calculation 
+## 
+##               n = 33.02467
+##           delta = 0.7
+##              sd = 1
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number in *each* group</code></pre>
+</div>
+<div id="step-by-step" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Step by step<a href="power-analysis.html#step-by-step" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here are the general set of steps required to implement a power analysis for most study designs:</p>
+<p><strong>1. Specify a hypothesis test.</strong></p>
+<p>Make explicit a null and alternative hypothesis.</p>
+<p><strong>2. Specify Type I and Type II error levels for the test.</strong></p>
+<p>Typically, the Type I error level (significance level / false positive level) is set to <span class="math inline">\(\alpha=0.05\)</span> and Type II error level (false negative level) <span class="math inline">\(\beta=0.2\)</span>, which yields a power level of <span class="math inline">\(1 - \beta = 0.8\)</span>, but other values could be substituted instead.</p>
+<p><strong>3. Specify the estimated effect size level for the test.</strong></p>
+<p>To solve for sample size <span class="math inline">\(n\)</span>, we need an estimate of effect size (<span class="math inline">\(\delta = \mu_1 - \mu_2\)</span>) that has scientific meaning. Sometimes we need to use a pilot dataset or look to previous studies to get this value.</p>
+<p><strong>4. Calculate the sample size required to obtain the power level desired.</strong></p>
+<p>This can either be done by pugging and chugging values into the relevant formula, or by using a software-based implementation of said formula.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/Lips7/dss-powersim/edit/main/01_canned.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["dss-powersim.pdf", "dss-powersim.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
