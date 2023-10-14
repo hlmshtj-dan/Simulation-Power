@@ -3,7 +3,9 @@ require(knitr)
 knitr::opts_chunk$set(eval=TRUE, results=TRUE, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE, fig.path="figures/")
 
 require(reticulate)
-Sys.setenv(RETICULATE_PYTHON = "C:\\Users\\Lips Apple\\scoop\\shims\\python3.exe")
+Sys.setenv(RETICULATE_PYTHON = "C:\\Users\\danyu\\anaconda3\\python.exe")
+
+
 ```
 
 # Python

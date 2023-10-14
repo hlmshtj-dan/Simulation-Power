@@ -3,7 +3,7 @@ require(knitr)
 
 # https://users.ssc.wisc.edu/~hemken/Stataworkshops/Statamarkdown/stata-and-r-markdown.html
 library(Statamarkdown)
-knitr::opts_chunk$set(engine.path=list(stata="C:/Program Files/Stata17/StataMP-64.exe"))
+knitr::opts_chunk$set(engine.path=list(stata="C:/Program Files/Stata18/StataMP-64.exe"))
 ```
 
 # Stata
