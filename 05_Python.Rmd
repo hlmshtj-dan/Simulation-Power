@@ -10,7 +10,7 @@ Sys.setenv(RETICULATE_PYTHON = "C:\\Users\\danyu\\anaconda3\\python.exe")
 
 # Python
 
-To begin with, the simulation based power analysis in Python just follows the structure in the last section in R, and there are repetitions in the texts to describe the method. However, there are differences between the two languages and we will specify those discrepancy in the following "note" parts.
+To begin with, the simulation based power analysis in Python just follows the structure in the last section in R, and there are repetitions in the text to describe the method. However, there are differences between the two languages and we will specify those discrepancy in the following "note" parts.
 
 ## Setup
 
@@ -295,14 +295,14 @@ print(single_run(n_pop = 10, n_rock = 50, beta_1 = 2))
 
 ## Power calculation automated
 
-To get an accurate estimation of power, we need to run the simulation many times. Here we use the package dask to parallelize existing code to speed-up iterative processes.
+To get an accurate estimation of power, we need to run the simulation many times. Here we use the package dask to parallelize existing code to speed up iterative processes.
 
 We use dask.delayed function to decorate single_run() so that it operates lazily, then call the delayed version repeatedly using for statement, and finally call dask.compute function to get the result of simulations.
 
 Note: There are two differences between Python and the R:
 
-1. The R uses the “future_map_dfr() function” to use the single_run() function in a loop, and Python directly uses “for” structure to do loop;
-2. The R sets parallel computing in the setup part, while the Python uses the “dask” library for parallel computing.
+1. The R uses the “future_map_dfr() function” to use the single_run() function in a loop, and Python directly uses the “for” structure to do a loop;
+2. The R sets parallel computing in the setup part, while Python uses the “dask” library for parallel computing.
 
 ```{python}
 client = Client()
