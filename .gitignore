@@ -33,3 +33,6 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 .DS_Store
+04_R.Rmd
+05_Python.Rmd
+06_Stata.Rmd
