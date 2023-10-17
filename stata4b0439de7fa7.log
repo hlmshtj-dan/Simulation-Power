@@ -1,0 +1,7 @@
+
+
+Running C:\Users\danyu\Simulation-Power\profile.do ...
+
+
+. // replicate the parameter search many times
+. quietly {
