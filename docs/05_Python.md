@@ -2,7 +2,7 @@
 
 # Python
 
-To begin with, the simulation based power analysis in Python just follows the structure in the last section in R, and there are repetitions in the texts to describe the method. However, there are differences between the two languages and we will specify those discrepancy in the following "note" parts.
+To begin with, the simulation-based power analysis in Python follows the structure in the last section in R, and there are repetitions in the text to describe the method. However, there are differences between the two languages; we will specify those discrepancies  in the following "note" parts.
 
 ## Setup
 
@@ -414,14 +414,14 @@ print(single_run(n_pop = 10, n_rock = 50, beta_1 = 2))
 
 ## Power calculation automated
 
-To get an accurate estimation of power, we need to run the simulation many times. Here we use the package dask to parallelize existing code to speed-up iterative processes.
+To get an accurate estimation of power, we need to run the simulation many times. Here we use the package dask to parallelize existing code to speed up iterative processes.
 
 We use dask.delayed function to decorate single_run() so that it operates lazily, then call the delayed version repeatedly using for statement, and finally call dask.compute function to get the result of simulations.
 
 Note: There are two differences between Python and the R:
 
-1. The R uses the “future_map_dfr() function” to use the single_run() function in a loop, and Python directly uses “for” structure to do loop;
-2. The R sets parallel computing in the setup part, while the Python uses the “dask” library for parallel computing.
+1. The R uses the “future_map_dfr() function” to use the single_run() function in a loop, and Python directly uses the “for” structure to do a loop;
+2. The R sets parallel computing in the setup part, while Python uses the “dask” library for parallel computing.
 
 
 ```python
@@ -451,7 +451,7 @@ print(f"Mean estimate: {mean_estimate}")
 ```
 
 ```
-## Mean estimate: 5.1752666666666665
+## Mean estimate: 4.964333333333332
 ```
 
 ```python
@@ -459,7 +459,7 @@ print(f"Mean standard error: {mean_se}")
 ```
 
 ```
-## Mean standard error: 1.4590666666666663
+## Mean standard error: 1.5052333333333332
 ```
 
 ```python
@@ -467,7 +467,7 @@ print(f"Power: {power}")
 ```
 
 ```
-## Power: 0.9666666666666667
+## Power: 0.9333333333333333
 ```
 
 ### Check false positive rate
@@ -501,9 +501,9 @@ In real life, we will not know the effect size of our quantity of interest and s
 
 Note: There are two differences between Python and the R:
 
-1. Python uses the “product” function to permutate and combine parameters, and then use “loop” and “dask.compute” to perform parallel computing;
-2. Python couldn’t repeatedly use parameter_search() and instead uses two layers of loop to realize multiple simulations of each permutation and combination of parameters.
-
+1. Python uses the “product” function to permutate and combine parameters and then uses “loop” and “dask.compute” to perform parallel computing;
+2. Python couldn’t repeatedly use parameter_search() and instead uses two layers of the loop to realize multiple simulations of each permutation and combination of parameters.
+ 
 
 ```python
  # grid of parameter values of interest
@@ -515,7 +515,7 @@ params = {
 }
 ```
 
-We can now wrap delayed_single_run() function within a more general function parameter_search() that takes the grid of parameter values as input and uses the for statement to iterate over each row of parameter values in pgrid and feed them into delayed_single_run().
+We can now wrap delayed_single_run() function within a more general function parameter_search() that takes the grid of parameter values as input and uses the for a statement to iterate over each row of parameter values in pgrid and feed them into delayed_single_run().
 
 
 ```python
@@ -535,7 +535,7 @@ def parameter_search(params):
     return pd.concat(client.gather(client.compute(sims))).reset_index().rename(columns={'index':'term'})
 ```
 
-If we call parameter_search() it will return a single replication of simulations for each combination of parameter values in pgrid.
+If we call parameter_search(), it will return a single replication of simulations for each combination of parameter values in pgrid.
 
 
 ```python
@@ -543,23 +543,23 @@ print(parameter_search(params))
 ```
 
 ```
-##             term   Coef. Std.Err.       p_value  n_subj  n_pop  n_rock  beta_1
-## 0      Intercept  59.602    1.442  0.000000e+00      10     10      10       1
-## 1        genre_i   0.248    1.946  8.984129e-01      10     10      10       1
-## 2    genre_i Var  14.549    3.250  5.802123e-01      10     10      10       1
-## 3    song_id Var   5.108    0.397  1.121989e-01      10     10      10       1
-## 4    subj_id Var   9.124    0.983  2.513832e-01      10     10      10       1
-## ..           ...     ...      ...           ...     ...    ...     ...     ...
-## 115    Intercept  59.806    1.049  0.000000e+00      50     40      40       5
-## 116      genre_i   5.104    1.048  1.110341e-06      50     40      40       5
-## 117  genre_i Var  16.926    0.545  1.238175e-04      50     40      40       5
-## 118  song_id Var  13.879    0.655  8.824751e-03      50     40      40       5
-## 119  subj_id Var  35.989    0.783  1.332278e-08      50     40      40       5
+##             term    Coef. Std.Err.       p_value  n_subj  n_pop  n_rock  beta_1
+## 0      Intercept   57.106    3.631  9.647402e-56      10     10      10       1
+## 1        genre_i    0.757    1.940  6.964514e-01      10     10      10       1
+## 2    genre_i Var   12.208    2.044  4.799640e-01      10     10      10       1
+## 3    song_id Var    5.574    0.396  9.570569e-02      10     10      10       1
+## 4    subj_id Var  119.101   10.909  1.965629e-01      10     10      10       1
+## ..           ...      ...      ...           ...     ...    ...     ...     ...
+## 115    Intercept   60.531    1.263  0.000000e+00      50     40      40       5
+## 116      genre_i    6.863    1.012  1.172492e-11      50     40      40       5
+## 117  genre_i Var   15.101    0.501  1.229941e-04      50     40      40       5
+## 118  song_id Var   13.197    0.665  1.142963e-02      50     40      40       5
+## 119  subj_id Var   61.752    1.665  2.278029e-06      50     40      40       5
 ## 
 ## [120 rows x 8 columns]
 ```
 
-To run multiple replication of simulations for each combination of parameter values in pgrid, we can use the for statement to iterate over each row of parameter values in pgrid for the number of times specified by reps. Fair warning, this will take some time if you have set a high number of replications!
+To run multiple replications of simulations for each combination of parameter values in pgrid, we can use the for a statement to iterate over each row of parameter values in pgrid for the number of times specified by reps. Fair warning: this will take some time if you have set a high number of replications!
 
 
 ```python
@@ -584,22 +584,22 @@ print(sims_params_df)
 
 ```
 ##              term   Coef. Std.Err.        p_value  n_subj  n_pop  n_rock  beta_1
-## 0       Intercept  60.728    2.719  1.660815e-110      10     10      10       1
-## 1         genre_i   3.421    1.976   8.340043e-02      10     10      10       1
-## 2     genre_i Var   9.088    1.781   5.211035e-01      10     10      10       1
-## 3     song_id Var   8.656    0.754   1.488890e-01      10     10      10       1
-## 4     subj_id Var  58.946    4.307   8.520353e-02      10     10      10       1
+## 0       Intercept  63.117    2.060  3.021081e-206      10     10      10       1
+## 1         genre_i   1.195    2.225   5.911703e-01      10     10      10       1
+## 2     genre_i Var  33.604    3.001   1.776420e-01      10     10      10       1
+## 3     song_id Var   1.062    0.317   6.864873e-01      10     10      10       1
+## 4     subj_id Var  34.457    2.413   8.561448e-02      10     10      10       1
 ## ...           ...     ...      ...            ...     ...    ...     ...     ...
-## 3595    Intercept  60.797    1.269   0.000000e+00      50     40      40       5
-## 3596      genre_i   5.909    0.897   4.406661e-11      50     40      40       5
-## 3597  genre_i Var  13.278    0.418   7.102715e-05      50     40      40       5
-## 3598  song_id Var   9.488    0.218   5.127222e-08      50     40      40       5
-## 3599  subj_id Var  67.105    1.741   1.463377e-06      50     40      40       5
+## 3595    Intercept  59.894    1.177   0.000000e+00      50     40      40       5
+## 3596      genre_i   5.417    0.985   3.777745e-08      50     40      40       5
+## 3597  genre_i Var  16.871    0.510   3.344605e-05      50     40      40       5
+## 3598  song_id Var  11.375    0.257   2.675493e-08      50     40      40       5
+## 3599  subj_id Var  53.483    1.403   1.700990e-06      50     40      40       5
 ## 
 ## [3600 rows x 8 columns]
 ```
 
-Now, as before, we can calculate power. But this time we’ll group by all of the parameters we manipulated in pgrid, so that we can get power estimates for all combinations of parameter values.
+Now, as before, we can calculate power. But this time, we’ll group by all of the parameters we manipulated in pgrid, so we can get power estimates for all combinations of parameter values.
 
 
 ```python
@@ -618,30 +618,30 @@ print(sims_table)
 
 ```
 ##        term  n_subj  n_pop  n_rock  beta_1  mean_estimate   mean_se     power
-## 0   genre_i      10     10      10       1       1.203400  2.243833  0.133333
-## 1   genre_i      10     10      10       3       3.048600  2.214933  0.300000
-## 2   genre_i      10     10      10       5       5.812333  2.256933  0.733333
-## 3   genre_i      10     10      40       1       0.975533  2.233233  0.000000
-## 4   genre_i      10     10      40       3       3.352133  2.334967  0.333333
-## 5   genre_i      10     10      40       5       5.523333  2.241700  0.700000
-## 6   genre_i      10     40      10       1       1.688033  2.277067  0.133333
-## 7   genre_i      10     40      10       3       3.227900  2.106500  0.266667
-## 8   genre_i      10     40      10       5       5.042500  2.211833  0.600000
-## 9   genre_i      10     40      40       1       0.573600  2.063567  0.033333
-## 10  genre_i      10     40      40       3       3.024333  1.901367  0.333333
-## 11  genre_i      10     40      40       5       5.070633  1.976233  0.733333
-## 12  genre_i      50     10      10       1       0.670867  1.524333  0.033333
-## 13  genre_i      50     10      10       3       2.908200  1.502000  0.433333
-## 14  genre_i      50     10      10       5       4.883867  1.557400  0.900000
-## 15  genre_i      50     10      40       1       0.936700  1.322900  0.066667
-## 16  genre_i      50     10      40       3       2.883133  1.346700  0.600000
-## 17  genre_i      50     10      40       5       5.239967  1.429500  0.933333
-## 18  genre_i      50     40      10       1       0.624500  1.456533  0.033333
-## 19  genre_i      50     40      10       3       2.991500  1.395400  0.633333
-## 20  genre_i      50     40      10       5       4.793000  1.325200  0.966667
-## 21  genre_i      50     40      40       1       0.935700  0.977867  0.066667
-## 22  genre_i      50     40      40       3       3.276167  0.990167  0.900000
-## 23  genre_i      50     40      40       5       4.806467  0.987367  1.000000
+## 0   genre_i      10     10      10       1       1.860233  2.304167  0.166667
+## 1   genre_i      10     10      10       3       3.383000  2.432767  0.300000
+## 2   genre_i      10     10      10       5       4.579733  2.228967  0.466667
+## 3   genre_i      10     10      40       1       0.680567  2.163200  0.000000
+## 4   genre_i      10     10      40       3       3.212333  2.110667  0.266667
+## 5   genre_i      10     10      40       5       5.592100  2.128300  0.700000
+## 6   genre_i      10     40      10       1       1.128000  2.343100  0.033333
+## 7   genre_i      10     40      10       3       2.836500  2.169833  0.200000
+## 8   genre_i      10     40      10       5       4.934800  2.084233  0.733333
+## 9   genre_i      10     40      40       1       0.510267  1.935767  0.000000
+## 10  genre_i      10     40      40       3       2.840867  2.012100  0.266667
+## 11  genre_i      10     40      40       5       4.764300  2.111433  0.600000
+## 12  genre_i      50     10      10       1       0.602800  1.575633  0.066667
+## 13  genre_i      50     10      10       3       2.496633  1.609067  0.400000
+## 14  genre_i      50     10      10       5       5.187467  1.557300  0.900000
+## 15  genre_i      50     10      40       1       0.443700  1.420800  0.033333
+## 16  genre_i      50     10      40       3       2.930000  1.382433  0.566667
+## 17  genre_i      50     10      40       5       5.353533  1.340100  0.966667
+## 18  genre_i      50     40      10       1       0.953367  1.361667  0.066667
+## 19  genre_i      50     40      10       3       3.229233  1.425400  0.633333
+## 20  genre_i      50     40      10       5       5.421800  1.373667  1.000000
+## 21  genre_i      50     40      40       1       1.010533  0.995900  0.166667
+## 22  genre_i      50     40      40       3       3.082200  0.990033  0.866667
+## 23  genre_i      50     40      40       5       4.902833  0.998700  1.000000
 ```
 
 Here’s a graph that visualizes the output of the power simulation.
@@ -671,29 +671,29 @@ for i, (pop, rock) in enumerate(sims_table.groupby(['n_pop', 'n_rock'])):
 
 ```
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x0000023FAEDF3290>
+## <matplotlib.lines.Line2D object at 0x000002061718C210>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x0000023FAFA7CC90>
+## <matplotlib.legend.Legend object at 0x00000206174536D0>
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x0000023FAF04C990>
+## <matplotlib.lines.Line2D object at 0x0000020617E1B950>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x0000023FA8A05790>
+## <matplotlib.legend.Legend object at 0x0000020616B8C150>
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x0000023FB0A83010>
+## <matplotlib.lines.Line2D object at 0x0000020616FCC150>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x0000023FB0C9A2D0>
+## <matplotlib.legend.Legend object at 0x0000020616BFB190>
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x0000023FB0E7F0D0>
+## <matplotlib.lines.Line2D object at 0x0000020616B8CB50>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x0000023FAF04D4D0>
+## <matplotlib.legend.Legend object at 0x0000020616FCBA90>
 ```
 
 ```python
