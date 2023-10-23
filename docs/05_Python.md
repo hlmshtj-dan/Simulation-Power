@@ -50,7 +50,6 @@ we will simulate data from a design with crossed random factors of subjects and 
 (see [Power of What?](./power-of-what.html) for design details),
 fit a model to the simulated data, recover from the model output the parameter values we put in,
 calculate power, and finally automate the whole process so that we can calculate power for different effect sizes.
-Much of the general workflow here is borrowed from [DeBruine & Dale (2021) Understanding Mixed-Effects Models through Simulation](https://journals.sagepub.com/doi/full/10.1177/2515245920965119).
 We’ll start by writing code that simulates datasets under the alternative hypothesis.
 
 Note: There are two differences between Python and the R:
@@ -483,7 +482,7 @@ print(f"Mean estimate: {mean_estimate}")
 ```
 
 ```
-## Mean estimate: 5.0537
+## Mean estimate: 4.869333333333333
 ```
 
 ```python
@@ -491,7 +490,7 @@ print(f"Mean standard error: {mean_se}")
 ```
 
 ```
-## Mean standard error: 1.4789333333333334
+## Mean standard error: 1.4805
 ```
 
 ```python
@@ -499,7 +498,7 @@ print(f"Power: {power}")
 ```
 
 ```
-## Power: 0.9
+## Power: 0.9333333333333333
 ```
 
 ### Check false positive rate
@@ -523,7 +522,7 @@ print((sims_fp_df[sims_fp_df['term'] == 'genre_i']['p_value'].astype(float) < al
 ```
 
 ```
-## 0.0
+## 0.06666666666666667
 ```
 
 Ideally, the false positive rate will be equal to alpha, which we set at 0.05.
@@ -584,17 +583,17 @@ print(parameter_search(params))
 
 ```
 ##             term   Coef. Std.Err.        p_value  n_subj  n_pop  n_rock  beta_1
-## 0      Intercept  61.634    1.685  6.645349e-293      10     10      10       1
-## 1        genre_i   5.130    1.971   9.247504e-03      10     10      10       1
-## 2    genre_i Var  11.926    1.670   3.955052e-01      10     10      10       1
-## 3    song_id Var   6.398    0.494   1.235221e-01      10     10      10       1
-## 4    subj_id Var  14.929    1.016   8.043422e-02      10     10      10       1
+## 0      Intercept  62.338    2.030  3.829186e-207      10     10      10       1
+## 1        genre_i  -0.649    2.162   7.639611e-01      10     10      10       1
+## 2    genre_i Var  11.690    1.491   3.047030e-01      10     10      10       1
+## 3    song_id Var  11.685    5.453   7.790761e-01      10     10      10       1
+## 4    subj_id Var  23.678    1.444   3.186843e-02      10     10      10       1
 ## ..           ...     ...      ...            ...     ...    ...     ...     ...
-## 115    Intercept  61.332    1.037   0.000000e+00      50     40      40       5
-## 116      genre_i   3.121    1.068   3.472719e-03      50     40      40       5
-## 117  genre_i Var  22.232    0.693   7.356275e-05      50     40      40       5
-## 118  song_id Var  12.612    0.447   4.875797e-04      50     40      40       5
-## 119  subj_id Var  36.410    0.809   2.683366e-08      50     40      40       5
+## 115    Intercept  59.487    0.947   0.000000e+00      50     40      40       5
+## 116      genre_i   5.784    1.002   7.770074e-09      50     40      40       5
+## 117  genre_i Var  15.885    0.599   1.020942e-03      50     40      40       5
+## 118  song_id Var  12.417    0.441   4.894875e-04      50     40      40       5
+## 119  subj_id Var  27.701    0.639   7.954097e-08      50     40      40       5
 ## 
 ## [120 rows x 8 columns]
 ```
@@ -627,17 +626,17 @@ print(sims_params_df)
 
 ```
 ##              term   Coef. Std.Err.        p_value  n_subj  n_pop  n_rock  beta_1
-## 0       Intercept  64.272    2.972  1.015150e-103      10     10      10       1
-## 1         genre_i   1.313    2.319   5.711956e-01      10     10      10       1
-## 2     genre_i Var  13.256    1.545   2.729210e-01      10     10      10       1
-## 3     song_id Var  14.144    0.910   4.697565e-02      10     10      10       1
-## 4     subj_id Var  68.058    4.494   5.294626e-02      10     10      10       1
+## 0       Intercept  62.297    2.492  6.856763e-138      10     10      10       1
+## 1         genre_i   1.793    2.157   4.058926e-01      10     10      10       1
+## 2     genre_i Var  13.709    2.097   4.667592e-01      10     10      10       1
+## 3     song_id Var   8.336    0.589   1.150140e-01      10     10      10       1
+## 4     subj_id Var  45.707    2.612   5.143010e-02      10     10      10       1
 ## ...           ...     ...      ...            ...     ...    ...     ...     ...
-## 3595    Intercept  61.106    0.950   0.000000e+00      50     40      40       5
-## 3596      genre_i   5.974    0.874   8.097438e-12      50     40      40       5
-## 3597  genre_i Var  16.459    0.356   1.915712e-08      50     40      40       5
-## 3598  song_id Var   7.335    0.138   1.122390e-10      50     40      40       5
-## 3599  subj_id Var  34.306    0.702   2.820328e-09      50     40      40       5
+## 3595    Intercept  60.258    1.246   0.000000e+00      50     40      40       5
+## 3596      genre_i   6.578    0.889   1.332589e-13      50     40      40       5
+## 3597  genre_i Var  12.985    0.410   7.758284e-05      50     40      40       5
+## 3598  song_id Var   9.311    0.214   5.581373e-08      50     40      40       5
+## 3599  subj_id Var  64.360    1.668   1.503411e-06      50     40      40       5
 ## 
 ## [3600 rows x 8 columns]
 ```
@@ -662,30 +661,30 @@ print(sims_table)
 
 ```
 ##        term  n_subj  n_pop  n_rock  beta_1  mean_estimate   mean_se     power
-## 0   genre_i      10     10      10       1       0.968567  2.359500  0.066667
-## 1   genre_i      10     10      10       3       2.711167  2.392767  0.200000
-## 2   genre_i      10     10      10       5       4.633967  2.309233  0.600000
-## 3   genre_i      10     10      40       1       0.820900  2.255433  0.000000
-## 4   genre_i      10     10      40       3       4.020000  2.173000  0.466667
-## 5   genre_i      10     10      40       5       5.214967  2.284733  0.666667
-## 6   genre_i      10     40      10       1       1.004667  2.227100  0.066667
-## 7   genre_i      10     40      10       3       2.725500  2.138300  0.166667
-## 8   genre_i      10     40      10       5       4.948467  2.229467  0.533333
-## 9   genre_i      10     40      40       1       0.906433  2.052900  0.066667
-## 10  genre_i      10     40      40       3       3.051967  1.813300  0.366667
-## 11  genre_i      10     40      40       5       5.063900  2.176133  0.700000
-## 12  genre_i      50     10      10       1       0.805567  1.586033  0.033333
-## 13  genre_i      50     10      10       3       2.836900  1.486067  0.366667
-## 14  genre_i      50     10      10       5       5.130467  1.529067  0.900000
-## 15  genre_i      50     10      40       1       0.963833  1.351433  0.133333
-## 16  genre_i      50     10      40       3       2.652067  1.330767  0.566667
-## 17  genre_i      50     10      40       5       5.353667  1.405733  1.000000
-## 18  genre_i      50     40      10       1       1.388267  1.360200  0.100000
-## 19  genre_i      50     40      10       3       3.313000  1.367167  0.600000
-## 20  genre_i      50     40      10       5       4.972600  1.475933  0.933333
-## 21  genre_i      50     40      40       1       0.955000  1.006933  0.100000
-## 22  genre_i      50     40      40       3       2.889733  0.980033  0.900000
-## 23  genre_i      50     40      40       5       5.070533  1.001300  1.000000
+## 0   genre_i      10     10      10       1       1.165967  2.375033  0.066667
+## 1   genre_i      10     10      10       3       2.811133  2.349633  0.233333
+## 2   genre_i      10     10      10       5       4.163033  2.332200  0.300000
+## 3   genre_i      10     10      40       1       0.522033  2.145167  0.000000
+## 4   genre_i      10     10      40       3       3.309567  2.226133  0.333333
+## 5   genre_i      10     10      40       5       5.294833  2.193767  0.666667
+## 6   genre_i      10     40      10       1       1.198300  2.240933  0.066667
+## 7   genre_i      10     40      10       3       2.752233  2.146500  0.166667
+## 8   genre_i      10     40      10       5       5.395867  2.162600  0.866667
+## 9   genre_i      10     40      40       1       0.653033  1.960033  0.066667
+## 10  genre_i      10     40      40       3       3.085167  1.899033  0.500000
+## 11  genre_i      10     40      40       5       4.893800  2.018800  0.733333
+## 12  genre_i      50     10      10       1       1.198700  1.536833  0.066667
+## 13  genre_i      50     10      10       3       3.052767  1.531967  0.566667
+## 14  genre_i      50     10      10       5       5.918000  1.632533  0.966667
+## 15  genre_i      50     10      40       1       0.861233  1.377133  0.100000
+## 16  genre_i      50     10      40       3       2.903267  1.375267  0.533333
+## 17  genre_i      50     10      40       5       4.541133  1.293333  0.900000
+## 18  genre_i      50     40      10       1       1.134767  1.407800  0.066667
+## 19  genre_i      50     40      10       3       2.763567  1.315800  0.566667
+## 20  genre_i      50     40      10       5       4.664467  1.332700  0.933333
+## 21  genre_i      50     40      40       1       1.148600  0.986867  0.266667
+## 22  genre_i      50     40      40       3       2.936500  0.979833  0.866667
+## 23  genre_i      50     40      40       5       5.162500  0.969633  1.000000
 ```
 
 Here’s a graph that visualizes the output of the power simulation.
@@ -715,29 +714,29 @@ for i, (pop, rock) in enumerate(sims_table.groupby(['n_pop', 'n_rock'])):
 
 ```
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x000001E697EC7350>
+## <matplotlib.lines.Line2D object at 0x0000029D12ACE390>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x000001E696A18D50>
+## <matplotlib.legend.Legend object at 0x0000029D122C1550>
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x000001E696C96AD0>
+## <matplotlib.lines.Line2D object at 0x0000029D12B50650>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x000001E6907EA550>
+## <matplotlib.legend.Legend object at 0x0000029D11B6A5D0>
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x000001E6966E19D0>
+## <matplotlib.lines.Line2D object at 0x0000029D122F88D0>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x000001E6966F9090>
+## <matplotlib.legend.Legend object at 0x0000029D11F98F10>
 ## <Axes: xlabel='mean_estimate', ylabel='power'>
-## <matplotlib.lines.Line2D object at 0x000001E696731210>
+## <matplotlib.lines.Line2D object at 0x0000029D11C452D0>
 ## Text(0.5, 0, 'Effect size (rock genre - pop genre)')
 ## Text(0, 0.5, 'Power')
 ## (0.0, 1.0)
-## <matplotlib.legend.Legend object at 0x000001E6966C1E10>
+## <matplotlib.legend.Legend object at 0x0000029D120786D0>
 ```
 
 ```python
@@ -748,4 +747,4 @@ plt.tight_layout()
 plt.show()
 ```
 
-<img src="figures/unnamed-chunk-31-3.png" width="1152" />
+<img src="figures/unnamed-chunk-30-3.png" width="1152" />

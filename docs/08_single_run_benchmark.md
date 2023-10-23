@@ -1,7 +1,7 @@
 
 
 
-# (PART) Appendix {-}
+
 
 # Single Run Benchmark
 
@@ -41,7 +41,7 @@ sprintf("Average running time is %f s", r_average)
 ```
 
 ```
-## [1] "Average running time is 0.232100 s"
+## [1] "Average running time is 0.128400 s"
 ```
 
 ## Python
@@ -68,7 +68,7 @@ print(f"Average running time is {python_average} s")
 ```
 
 ```
-## Average running time is 1.1418413130000409 s
+## Average running time is 0.11294644300010986 s
 ```
 
 ## Stata
@@ -121,7 +121,7 @@ quietly {
 ```
 
 ```
-Average running time is .23617 s
+Average running time is .09861 s
 ```
 
 ## Benchmark Results
@@ -133,6 +133,6 @@ Table: (\#tab:unnamed-chunk-9) Benchmark results.
 
 Software   Parameters                                                               Average Time 
 ---------  -----------------------------------------------------------------------  -------------
-R          $\beta_0$, $\beta_1$, $\omega_0$, $\tau_0$, $\tau_1$, $\rho$, $\sigma$   0.23         
-Python     $\beta_0$, $\beta_1$, $\omega_0$, $\tau_0$, $\tau_1$, $\rho$, $\sigma$   1.14         
-Stata      $\beta_0$, $\beta_1$, $\tau_0$, $\sigma$                                 0.24         
+R          $\beta_0$, $\beta_1$, $\omega_0$, $\tau_0$, $\tau_1$, $\rho$, $\sigma$   0.13         
+Python     $\beta_0$, $\beta_1$, $\omega_0$, $\tau_0$, $\tau_1$, $\rho$, $\sigma$   0.11         
+Stata      $\beta_0$, $\beta_1$, $\tau_0$, $\sigma$                                 0.10         
