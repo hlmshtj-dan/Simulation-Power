@@ -25,7 +25,12 @@ set seed 02138
 
 ## Data simulation step by step
 
-To give an overview of the power simulation task, we will simulate data from a design with crossed random factors of subjects and songs (see [Power of What?](./power-of-what.html) for design details), fit a model to the simulated data, recover from the model output the parameter values we put in, calculate power, and finally automate the whole process so that we can calculate power for different effect sizes. \### Establish the simulation parameters
+To give an overview of the power simulation task,
+we will simulate data from a design with crossed random factors of subjects and songs (see [Power of What?](./power-of-what.html) for design details),
+fit a model to the simulated data, recover from the model output the parameter values we put in,
+calculate power, and finally automate the whole process so that we can calculate power for different effect sizes.
+
+### Establish the simulation parameters
 
 Before we start, let's set some global parameters for our power simulations.
 
@@ -40,9 +45,12 @@ global alpha = 0.05
 
 ### Establish the data-generating parameters
 
-The first thing to do is to set up the parameters that govern the process we assume gave rise to the data - the *data-generating process*, or DGP. We previously decided upon the data-generating parameters (see [Power of What?](./power-of-what.html)), so we just need to code them here.
+The first thing to do is to set up the parameters that govern the process we assume gave rise to the data - the *data-generating process*, or DGP.
+We previously decided upon the data-generating parameters (see [Power of What?](./power-of-what.html)), so we just need to code them here.
 
-Note: There is a difference between Stata and R and Python: We decrease the data-generating parameters to simplify our model, and we delete some parameters: by-song random intercept `omega_0`, by-subject random slope sd `tau_1`, and the correlation between intercept and slope `rho`.
+Note: There is a difference between Stata and R and Python:
+We decrease the data-generating parameters to simplify our model,
+and we delete some parameters: by-song random intercept `omega_0`, by-subject random slope sd `tau_1`, and the correlation between intercept and slope `rho`.
 
 
 ```stata
@@ -114,7 +122,8 @@ list in 1/10
 
 #### Simulate the sampling of subjects
 
-Now, we simulate the sampling of participants, which results in a table listing each individual and their random effect (a random intercept). To do this, we must sample $t_0$ from a normal distribution.
+Now, we simulate the sampling of participants, which results in a table listing each individual and their random effect (a random intercept).
+To do this, we must sample $t_0$ from a normal distribution.
 
 We will use the function `rnormal`, which generates a simulated value from a univariate normal distribution with a mean of 0 and a standard deviations of `tau_0` of each variable.
 
@@ -157,7 +166,8 @@ list in 1 / 10
 
 #### Check the simulated values
 
-Let's do a quick sanity check by comparing our simulated values to the parameters we used as inputs. Because the sampling process is stochastic, we shouldn't expect that these will exactly match for any given run of the simulation.
+Let's do a quick sanity check by comparing our simulated values to the parameters we used as inputs.
+Because the sampling process is stochastic, we shouldn't expect that these will exactly match for any given run of the simulation.
 
 
 ```stata
@@ -176,7 +186,11 @@ tau_0, 7, 7.4337502
 
 #### Simulate trials
 
-Since all subjects rate all songs (i.e., the design is fully crossed), we can set up a table of trials by including every possible combination of the rows in the `subjects` and `songs` tables. Each test has a random error associated with it, reflecting fluctuations in trial-by-trial ratings due to unknown factors. We simulate this by sampling values from a univariate normal distribution with a mean of 0 and a standard deviation of `sigma`.
+Since all subjects rate all songs (i.e., the design is fully crossed),
+we can set up a table of trials by including every possible combination of the rows in the `subjects` and `songs` tables.
+Each test has a random error associated with it,
+reflecting fluctuations in trial-by-trial ratings due to unknown factors.
+We simulate this by sampling values from a univariate normal distribution with a mean of 0 and a standard deviation of `sigma`.
 
 
 ```stata
@@ -213,7 +227,9 @@ list in 1 / 10
 
 #### Calculate response values
 
-With this resulting `trials` table, in combination with the constants `beta_0` and `beta_1`, we have the full set of values that we need to compute the response variable `liking_ij` according to the linear model we defined previously (see [Power of What?](./power-of-what.html)).
+With this resulting `trials` table, in combination with the constants `beta_0` and `beta_1`,
+we have the full set of values that we need to compute the response variable `liking_ij`
+according to the linear model we defined previously (see [Power of What?](./power-of-what.html)).
 
 
 ```stata
@@ -247,7 +263,8 @@ list in 1 / 10
 
 #### Plot the data
 
-Let's visualize the distribution of the response variable for each of the two song genres and superimpose the simulated parameter estimates for the means of these two groups.
+Let's visualize the distribution of the response variable for each of the two song genres and
+superimpose the simulated parameter estimates for the means of these two groups.
 
 
 ```stata
@@ -267,7 +284,8 @@ quietly {
 
 ### Analyze the simulated data
 
-Now we can analyze our simulated data in a linear mixed effects model using the function `mixed`. The model formula in `mixed` maps how we calculated our `liking_ij` outcome variable above.
+Now we can analyze our simulated data in a linear mixed effects model using the function `mixed`.
+The model formula in `mixed` maps how we calculated our `liking_ij` outcome variable above.
 
 
 ```stata
@@ -351,7 +369,10 @@ end
 
 ## Power calculation single run
 
-We can wrap the data-generating function and modeling code in a new function `single_run()` that returns the analysis results for a single simulation run. We'll suppress warnings and messages from the modeling fitting process, as these sometimes occur with simulation runs that generate extremely realized values for parameters.
+We can wrap the data-generating function and modeling code in a new function `single_run()` that
+returns the analysis results for a single simulation run.
+We'll suppress warnings and messages from the modeling fitting process,
+as these sometimes occur with simulation runs that generate extremely realized values for parameters.
 
 
 ```stata
@@ -394,9 +415,9 @@ return list
 
 ```
 scalars:
-            r(p_value) =  6.15504528650e-25
-            r(std_err) =  .3467247369073205
-               r(coef) =  6.072637593587212
+            r(p_value) =  6.15504528649e-25
+            r(std_err) =  .3467247369073159
+               r(coef) =  6.072637593587305
 ```
 
 
@@ -408,16 +429,18 @@ return list
 
 ```
 scalars:
-            r(p_value) =  .000521305877981
-            r(std_err) =  .318005651218237
-               r(coef) =  1.956555587768456
+            r(p_value) =  .0005213058910955
+            r(std_err) =  .3180056524570669
+               r(coef) =  1.956555587768618
 ```
 
 ## Power calculation automated
 
-To get an accurate estimation of power, we need to run the simulation many times. Here, we use a matrix `results` to store the analysis results of each run.
+To get an accurate estimation of power, we need to run the simulation many times.
+Here, we use a matrix `results` to store the analysis results of each run.
 
-We can finally calculate power for our parameter of interest `beta_1` by filtering to keep only that term and calculating the proportion of times the $p$-value is below the `alpha` threshold.
+We can finally calculate power for our parameter of interest `beta_1`
+by filtering to keep only that term and calculating the proportion of times the $p$-value is below the `alpha` threshold.
 
 
 ```stata
@@ -458,7 +481,9 @@ Power Mean: 1
 
 ### Check false positive rate
 
-We can do a sanity check to see if our simulation is performing as expected by checking the false positive rate (Type I error rate). We set the effect of `genre_ij` (`beta_1`) to 0 to calculate the false positive rate, which is the probability of concluding there is an effect when there is no actual effect in the population.
+We can do a sanity check to see if our simulation is performing as expected by checking the false positive rate (Type I error rate).
+We set the effect of `genre_ij` (`beta_1`) to 0 to calculate the false positive rate,
+which is the probability of concluding there is an effect when there is no actual effect in the population.
 
 
 ```stata
@@ -494,7 +519,11 @@ Ideally, the false positive rate will be equal to `alpha`, which we set at 0.05.
 
 ## Power for different effect sizes
 
-In real life, we will not know the effect size of our quantity of interest, and so we will need to repeatedly perform the power analysis over a range of different plausible effect sizes. Perhaps we might also want to calculate power as we vary other data-generating parameters, such as the number of pop and rock songs sampled and the number of subjects sampled. We can create a table that combines all combinations of the parameters we want to vary in a grid.
+In real life, we will not know the effect size of our quantity of interest,
+and so we will need to repeatedly perform the power analysis over a range of different plausible effect sizes.
+Perhaps we might also want to calculate power as we vary other data-generating parameters,
+such as the number of pop and rock songs sampled and the number of subjects sampled.
+We can create a table that combines all combinations of the parameters we want to vary in a grid.
 
 
 ```stata
@@ -513,7 +542,8 @@ quietly matrix define params = (10, 10, 10, 1 \ 10, 10, 10, 2 \ 10, 10, 10, 3 \ 
 \ 50, 40, 40, 1 \ 50, 40, 40, 2 \ 50, 40, 40, 3 \ 50, 40, 40, 4 \ 50, 40, 40, 5)
 ```
 
-We can now wrap our `single_run()` function within a more general function `parameter_search()` that takes the grid of parameter values as input and uses a matrix `results` to store the analysis results of each `single_run()`.
+We can now wrap our `single_run()` function within a more general function `parameter_search()` that
+takes the grid of parameter values as input and uses a matrix `results` to store the analysis results of each `single_run()`.
 
 
 ```stata
@@ -568,7 +598,7 @@ r(RE)[60,7]
  r6         10         10         40          1  1.5987428  .83724974
  r7         10         10         40          2  2.6229231  .79420778
  r8         10         10         40          3  3.1869321   .7857458
- r9         10         10         40          4  3.6704681  .74732381
+ r9         10         10         40          4  3.6704681   .7473238
 r10         10         10         40          5  5.4704365  .77949362
 r11         10         40         10          1  2.2633134  .89868119
 r12         10         40         10          2  2.6807894  .84989613
@@ -591,7 +621,7 @@ r28         25         10         40          3  2.6370676  .31890292
 r29         25         10         40          4  4.8110402   .3149082
 r30         25         10         40          5  4.8646795  .32617716
 r31         25         40         10          1  .62202797  .30721533
-r32         25         40         10          2  2.4312455  .33297658
+r32         25         40         10          2  2.4312455  .33297659
 r33         25         40         10          3  3.0815587  .31753019
 r34         25         40         10          4   4.358412  .32801022
 r35         25         40         10          5  4.7545508  .31512113
@@ -637,7 +667,7 @@ r12  .00363862
 r13  2.715e-07
 r14  6.376e-06
 r15  4.828e-08
-r16   .1707323
+r16  .17073231
 r17  .00553657
 r18  2.850e-08
 r19  4.059e-16
@@ -684,7 +714,8 @@ r59  1.906e-50
 r60  1.506e-82
 ```
 
-Then we just repeatedly call `parameter_search()` for the number of times specified by `reps` and store the result in a matrix `final_results`. Fair warning: this will take some time if you have set a high number of replications!
+Then we just repeatedly call `parameter_search()` for the number of times specified by `reps` and store the result in a matrix `final_results`.
+Fair warning: this will take some time if you have set a high number of replications!
 
 
 ```stata
@@ -714,7 +745,8 @@ quietly {
 }
 ```
 
-Now, as before, we can calculate power. But this time, we'll group by all of the parameters we manipulated in `pgrid`, so that we can get power estimates for all combinations of parameter values.
+Now, as before, we can calculate power. But this time, we'll group by all of the parameters we manipulated in `pgrid`,
+so that we can get power estimates for all combinations of parameter values.
 
 
 ```stata
